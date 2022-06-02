@@ -23,9 +23,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.android.navigation.databinding.FragmentGameBinding
 
-class GameFragment : Fragment() {
+class GameFragment : Fragment(R.layout.fragment_game) {
+
+
     data class Question(
             val text: String,
             val answers: List<String>)
@@ -57,29 +60,27 @@ class GameFragment : Fragment() {
     )
 
 
-
+    private lateinit var binding : FragmentGameBinding
     lateinit var currentQuestion: Question
     lateinit var answers: MutableList<String>
     private var questionIndex = 0
     private val numQuestions = Math.min((questions.size + 1) / 2, 3)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
 
-        // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentGameBinding>(
-                inflater, R.layout.fragment_game, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // Shuffles the questions and sets the question index to the first question.
-        randomizeQuestions()
+        binding = FragmentGameBinding.bind(view)
 
         // Bind this fragment class to the layout
         binding.game = this
 
-        // Set the onClickListener for the submitButton
-        binding.submitButton.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-        { view: View ->
+        // Shuffles the questions and sets the question index to the first question.
+        randomizeQuestions()
+
+        binding.submitButton.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER") {
             val checkedId = binding.questionRadioGroup.checkedRadioButtonId
+
             // Do nothing if nothing is checked (id == -1)
             if (-1 != checkedId) {
                 var answerIndex = 0
@@ -98,16 +99,17 @@ class GameFragment : Fragment() {
                         setQuestion()
                         binding.invalidateAll()
                     } else {
-                        // We've won!  Navigate to the gameWonFragment.
+                        findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment())
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
+                    findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameOverFragment())
                 }
             }
-        }
-        return binding.root
-    }
 
+        }
+
+    }
     // randomize the questions and set the first question
     private fun randomizeQuestions() {
         questions.shuffle()
