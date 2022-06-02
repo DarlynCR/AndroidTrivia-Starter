@@ -22,15 +22,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.android.navigation.databinding.FragmentGameBinding
 import com.example.android.navigation.databinding.FragmentGameWonBinding
 
 
-class GameWonFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        val binding: FragmentGameWonBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_game_won, container, false)
-        return binding.root
+class GameWonFragment : Fragment(R.layout.fragment_game_won) {
+
+    private lateinit var binding: FragmentGameWonBinding
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentGameWonBinding.bind(view)
+
+        binding.nextMatchButton.setOnClickListener {
+            findNavController().navigate(GameWonFragmentDirections.actionGameWonFragmentToGameFragment())
+        }
     }
 }
