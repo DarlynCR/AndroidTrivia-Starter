@@ -16,29 +16,55 @@
 
 package com.example.android.navigation
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.ActivityMainBinding
+import com.example.android.navigation.databinding.FragmentGameWonBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         @Suppress("UNUSED_VARIABLE")
 
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val navController = this.findNavController(R.id.myNavHostFragment)
+        //Para agregar el up button en el app bar
+        NavigationUI.setupActionBarWithNavController(this,this.findNavController(R.id.myNavHostFragment))
 
-        NavigationUI.setupActionBarWithNavController(this,navController)
+/*        binding.toolbar.inflateMenu(R.menu.options_menu)*/
 
     }
+    // Para añadir un menú en el app bar de toda la app
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //Se infla el menú en el app bar
+        menuInflater.inflate(R.menu.options_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
+    //Se da funcionalidad al icono android del menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.android){
+            Toast.makeText(this, "Welcome to Android Trivia", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+        }
+
+    //Para agregar el up button en eel ap bar
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.myNavHostFragment)
-        return navController.navigateUp()
+        return this.findNavController(R.id.myNavHostFragment).navigateUp()
     }
 
 }
