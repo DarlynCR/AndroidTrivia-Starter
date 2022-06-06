@@ -18,14 +18,28 @@ package com.example.android.navigation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.android.navigation.databinding.FragmentRulesBinding
+import com.example.android.navigation.databinding.FragmentTitleBinding
+import com.example.android.navigation.RulesFragmentDirections
 
-class RulesFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rules, container, false)
+class RulesFragment : Fragment(R.layout.fragment_rules) {
+
+    private lateinit var binding: FragmentRulesBinding
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding = FragmentRulesBinding.bind(view)
+
+        binding.rulesPlayButton.setOnClickListener {
+            val action = RulesFragmentDirections.actionRulesFragmentToGameFragment()
+            findNavController().navigate(action)
+        }
+
+
     }
 }

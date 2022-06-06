@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/rulesFragment"
+        android:title="@string/rules"
+        android:icon="@drawable/rules" />
+    <!--SI si usa lo mismo IDpara el elemento de menú
+    que para el Fragmento de destino,
+    ¡no necesita escribir ningún código para implementar
+    el onClickoListener!-->
+    <item
+        android:id="@+id/aboutFragment"
+        android:title="@string/about"
+        android:icon="@drawable/about_android_trivia"/>
+</menu>

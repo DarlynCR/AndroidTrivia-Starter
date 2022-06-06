@@ -29,6 +29,16 @@ class TitleFragment : Fragment(R.layout.fragment_title) {
             val action = TitleFragmentDirections.actionTitleFragmentToGameFragment()
             findNavController().navigate(action)
         }
+
+        binding.btnRules.setOnClickListener {
+            val action = TitleFragmentDirections.actionTitleFragmentToRulesFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.btnAbout.setOnClickListener {
+            val action = TitleFragmentDirections.actionTitleFragmentToAboutFragment()
+            findNavController().navigate(action)
+        }
     }
 
     //Para llamar a este método primero se debe llamar el método setHasOptionsMenu(true)
