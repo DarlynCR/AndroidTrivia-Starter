@@ -99,7 +99,10 @@ class GameFragment : Fragment(R.layout.fragment_game) {
                         setQuestion()
                         binding.invalidateAll()
                     } else {
-                        findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment())
+                        // We've won!  Navigate to the gameWonFragment.
+                        //Se pasan los argumentos al GameWonFragment por el metodo actionGameFragmentToGameWonFragment
+                        //Primero se deben declarar en el GrameWonFragment del Nav_graph
+                        findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameWonFragment(numQuestions, questionIndex))
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
